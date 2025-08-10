@@ -45,11 +45,11 @@ async def predict(
     alcohol: float = Form(...)
 ):
     try:
-        data = [fixed_acidity, volatile_acidity, citric_acid, residual_sugar, 
-                chlorides, free_sulfur_dioxide, total_sulfur_dioxide, 
+        data = [fixed_acidity, volatile_acidity, citric_acid, residual_sugar,
+                chlorides, free_sulfur_dioxide, total_sulfur_dioxide,
                 density, pH, sulphates, alcohol]
         data = np.array(data).reshape(1, 11)
-        
+
         obj = PredictionPipeline()
         predict = obj.predict(data)
 

@@ -107,5 +107,3 @@ Key environment variables include:
 
 - `MODEL_REGISTRY`: Path to model registry
 - `MLFLOW_TRACKING_URI`: URI for MLflow tracking server
-
-
