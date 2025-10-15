@@ -1,6 +1,8 @@
 import os
 
 import joblib
+import mlflow
+import mlflow.sklearn
 import pandas as pd
 from sklearn.linear_model import ElasticNet
 
@@ -24,6 +26,12 @@ class ModelTrainer:
         lr = ElasticNet(
             alpha=self.config.alpha, l1_ratio=self.config.l1_ratio, random_state=42
         )
-        lr.fit(train_x, train_y)
+        with mlflow.start_run():
+            mlflow.log_param("alpha", self.config.alpha)
+            mlflow.log_param("l1_ratio", self.config.l1_ratio)
+            mlflow.log_param("model_name", self.config.model_name)
+            mlflow.log_param("target_column", self.config.target_column)
+            lr.fit(train_x, train_y)
 
-        joblib.dump(lr, os.path.join(self.config.root_dir, self.config.model_name))
+            joblib.dump(lr, os.path.join(self.config.root_dir, self.config.model_name))
+            mlflow.sklearn.log_model(lr, "model")
